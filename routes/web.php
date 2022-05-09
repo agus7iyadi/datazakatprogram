@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use App\Http\Controllers\dashboardZakat;
+use App\Models\User;
+use Yajra\Datatables\Datatables;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +22,19 @@ Route::get('/', function () {
 });
 
 Route::get('login', [dashboardZakat::class, 'dashboardf'])->name('v_dashboardZakat');
+Route::get('getUser', function (Request $request) {
+    if ($request->ajax()) {
+            $data = User::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+})->name('user.index'); 
 
 // Route::get('/', function () {
 //     return view('welcome');
