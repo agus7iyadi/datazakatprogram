@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
+use App\Http\Controllers\dashboardZakat;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +14,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
-    return view('welcome');
+    return view('v_dashboard');
 });
+
+Route::get('login', [dashboardZakat::class, 'dashboardf'])->name('v_dashboardZakat');
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
