@@ -18,23 +18,27 @@ use Illuminate\Http\Request;
 |
 */
 Route::get('/', function () {
-    return view('v_dashboard');
+    return view('welcome');
 });
 
-Route::get('login', [dashboardZakat::class, 'dashboardf'])->name('v_dashboardZakat');
-Route::get('getUser', function (Request $request) {
-    if ($request->ajax()) {
-            $data = User::latest()->get();
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-                    return $actionBtn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-})->name('user.index'); 
+// Route::resource('dashboard','dashboardZakat')->except(['show','update']);
+Route::resource('dashboard', App\Http\Controllers\dashboardZakat::class);
+
+
+// Route::get('login', [dashboardZakat::class, 'dashboardf'])->name('v_dashboardZakat');
+// Route::get('getUser', function (Request $request) {
+//     if ($request->ajax()) {
+//             $data = User::latest()->get();
+//             return DataTables::of($data)
+//                 ->addIndexColumn()
+//                 ->addColumn('action', function($row){
+//                     $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+//                     return $actionBtn;
+//                 })
+//                 ->rawColumns(['action'])
+//                 ->make(true);
+//         }
+// })->name('user.index'); 
 
 // Route::get('/', function () {
 //     return view('welcome');
